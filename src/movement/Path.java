@@ -22,8 +22,8 @@ public class Path {
   /** Creates a path with zero speed. */
   public Path() {
     this.nextWpIndex = 0;
-    this.coords = new ArrayList<Coord>();
-    this.speeds = new ArrayList<Double>(1);
+    this.coords = new ArrayList<>();
+    this.speeds = new ArrayList<>(1);
   }
 
   /**
@@ -34,8 +34,8 @@ public class Path {
    */
   public Path(Path path) {
     this.nextWpIndex = path.nextWpIndex;
-    this.coords = new ArrayList<Coord>((ArrayList<Coord>) path.coords);
-    this.speeds = new ArrayList<Double>((ArrayList<Double>) path.speeds);
+    this.coords = new ArrayList<>(path.coords);
+    this.speeds = new ArrayList<>(path.speeds);
   }
 
   /**
@@ -50,7 +50,7 @@ public class Path {
 
   /** Sets a constant speed for the whole path. Any previously set speed(s) is discarded. */
   public void setSpeed(double speed) {
-    this.speeds = new ArrayList<Double>(1);
+    this.speeds = new ArrayList<>(1);
     speeds.add(speed);
   }
 
@@ -110,7 +110,7 @@ public class Path {
    * @return the speed towards the next waypoint
    */
   public double getSpeed() {
-    assert speeds.size() != 0 : "No speed set";
+    assert !speeds.isEmpty() : "No speed set";
     assert nextWpIndex != 0 : "No waypoint asked";
 
     if (speeds.size() == 1) {
@@ -126,15 +126,15 @@ public class Path {
    * @return Path as a string
    */
   public String toString() {
-    String s = "";
+    StringBuilder s = new StringBuilder();
     for (int i = 0, n = coords.size(); i < n; i++) {
       Coord c = coords.get(i);
-      s += "->" + c;
+      s.append("->").append(c);
       if (speeds.size() > 1) {
-        s += String.format("@%.2f ", speeds.get(i));
+        s.append(String.format("@%.2f ", speeds.get(i)));
       }
     }
-    return s;
+    return s.toString();
   }
 
   public List<Double> getSpeeds() {
