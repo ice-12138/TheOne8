@@ -178,11 +178,11 @@ public abstract class ActiveRouter extends MessageRouter {
   protected int startTransfer(Message m, Connection con) {
     int retVal;
 
-    if (!con.isReadyForTransfer()) {
+    if (!con.isReadyForTransfer()) { // 是否busy
       return TRY_LATER_BUSY;
     }
 
-    if (!policy.acceptSending(getHost(), con.getOtherNode(getHost()), con, m)) {
+    if (!policy.acceptSending(getHost(), con.getOtherNode(getHost()), con, m)) { // 是否合法
       return MessageRouter.DENIED_POLICY;
     }
 

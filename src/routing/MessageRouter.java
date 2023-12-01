@@ -5,10 +5,9 @@
 package routing;
 
 import core.*;
+import java.util.*;
 import routing.util.RoutingInfo;
 import util.Tuple;
-
-import java.util.*;
 
 /** Superclass for message routers. */
 public abstract class MessageRouter {
@@ -81,13 +80,13 @@ public abstract class MessageRouter {
   private List<MessageListener> mListeners;
 
   /** The messages being transferred with msgID_hostName keys */
-  private HashMap<String, Message> incomingMessages;
+  private HashMap<String, Message> incomingMessages; // 正在接收的消息
 
   /** The messages this router is carrying */
-  private HashMap<String, Message> messages;
+  private HashMap<String, Message> messages; // 消息缓冲区，包括新创建的消息和要进行传输的消息
 
   /** The messages this router has received as the final recipient */
-  private HashMap<String, Message> deliveredMessages;
+  private HashMap<String, Message> deliveredMessages; // 成功投递的消息
 
   /** The messages that Applications on this router have blacklisted */
   private HashMap<String, Object> blacklistedMessages;
@@ -653,7 +652,7 @@ public abstract class MessageRouter {
    * @return A list of all applications that want to receive the message.
    */
   public Collection<Application> getApplications(String ID) {
-    LinkedList<Application> apps = new LinkedList<Application>();
+    LinkedList<Application> apps = new LinkedList<>();
     // Applications that match
     Collection<Application> tmp = this.applications.get(ID);
     if (tmp != null) {

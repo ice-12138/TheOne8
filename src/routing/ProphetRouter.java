@@ -222,18 +222,16 @@ public class ProphetRouter extends ActiveRouter {
 
   /**
    * Tries to send all other messages to all connected hosts ordered by their delivery probability
-   *
-   * @return The return value of {@link #tryMessagesForConnected(List)}
    */
-  private Tuple<Message, Connection> tryOtherMessages() {
-    List<Tuple<Message, Connection>> messages = new ArrayList<Tuple<Message, Connection>>();
+  private void tryOtherMessages() {
+    List<Tuple<Message, Connection>> messages = new ArrayList<>();
 
     Collection<Message> msgCollection = getMessageCollection();
 
     /* for all connected hosts collect all messages that have a higher
     probability of delivery by the other host */
     for (Connection con : getConnections()) {
-      DTNHost other = con.getOtherNode(getHost());
+      DTNHost other = con.getOtherNode(getHost()); // 获得链接另一端的节点
       ProphetRouter othRouter = (ProphetRouter) other.getRouter();
 
       if (othRouter.isTransferring()) {
@@ -246,18 +244,18 @@ public class ProphetRouter extends ActiveRouter {
         }
         if (othRouter.getPredFor(m.getTo()) > getPredFor(m.getTo())) {
           // the other node has higher probability of delivery
-          messages.add(new Tuple<Message, Connection>(m, con));
+          messages.add(new Tuple<>(m, con));
         }
       }
     }
 
     if (messages.isEmpty()) {
-      return null;
+      return;
     }
 
     // sort the message-connection tuples
     messages.sort(new TupleComparator());
-    return tryMessagesForConnected(messages); // try to send messages
+    tryMessagesForConnected(messages);
   }
 
   /**

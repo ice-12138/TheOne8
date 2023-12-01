@@ -7,7 +7,6 @@ package core;
 import input.EventQueue;
 import input.ExternalEvent;
 import input.ScheduledUpdatesQueue;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -180,9 +179,7 @@ public class World {
         }
       }
     }
-
-    setNextEventQueue();
-
+    setNextEventQueue();//获取事件队列，该队列包含本updateInterval可以处理的事件
     /* process all events that are due until next interval update */
     while (this.nextQueueEventTime <= runUntil) {
       simClock.setTime(this.nextQueueEventTime);

@@ -4,14 +4,13 @@
  */
 package core;
 
-import util.Range;
-
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import util.Range;
 
 /**
  * Interface for simulation settings stored in setting file(s). Settings class should be initialized
@@ -66,8 +65,8 @@ public class Settings {
    * @param namespace Namespace to use
    */
   public Settings(String namespace) {
-    this.oldNamespaces = new Stack<String>();
-    this.secondaryNamespaces = new Stack<String>();
+    this.oldNamespaces = new Stack<>();
+    this.secondaryNamespaces = new Stack<>();
     setNameSpace(namespace);
   }
 
